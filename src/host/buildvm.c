@@ -442,6 +442,24 @@ ok:
   if (ctx->mode == (BuildMode)-1) goto err;
 }
 
+static void cleanup(BuildCtx *ctx)
+{
+  int i;
+
+  free(ctx->glob);
+  free(ctx->bc_ofs);
+  free(ctx->code);
+  free((void*)ctx->beginsym);
+
+  for (i = 0; i <= ctx->nsym; i++)
+    free((void*)ctx->sym[i].name);
+  free(ctx->sym);
+
+  for (i = 0; i < ctx->nrelocsym; i++)
+    free((void*)ctx->relocsym[i]);
+  free((void*)ctx->relocsym);
+}
+
 int main(int argc, char **argv)
 {
   BuildCtx ctx_;
@@ -519,6 +537,7 @@ int main(int argc, char **argv)
   }
 
   fflush(ctx->fp);
+  cleanup(ctx);
   if (ferror(ctx->fp)) {
     fprintf(stderr, "Error: cannot write to output file: %s\n",
 	    strerror(errno));
