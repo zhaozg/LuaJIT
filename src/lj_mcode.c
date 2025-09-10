@@ -20,6 +20,11 @@
 #include "lj_vm.h"
 #endif
 
+#if defined(__mips__) || defined(__mips64)
+#include <sys/cachectl.h>
+#define __clear_cache(start, end) cacheflush((char*)(start), (int)(end-start), BCACHE)
+#endif
+
 /* -- OS-specific functions ----------------------------------------------- */
 
 #if LJ_HASJIT || LJ_HASFFI
