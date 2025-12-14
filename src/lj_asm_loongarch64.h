@@ -1868,7 +1868,7 @@ static void asm_tail_fixup(ASMState *as, TraceNo lnk)
 }
 
 /* Prepare tail of code. */
-static void asm_tail_prep(ASMState *as)
+static void asm_tail_prep(ASMState *as, TraceNo lnk)
 {
   MCode *p = as->mctop - 1;  /* Leave room for exit branch. */
   if (as->loopref) {

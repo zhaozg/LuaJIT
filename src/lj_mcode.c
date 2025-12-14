@@ -53,7 +53,7 @@ void lj_mcode_sync(void *start, void *end)
 #elif LJ_TARGET_PPC
   lj_vm_cachesync(start, end);
 #elif defined(__GNUC__) || defined(__clang__)
-#if defined(__mips__) || defined(__mips64)
+#if defined(__mips__) || defined(__mips64) || defined(__loongarch64)
   UNUSED(start); UNUSED(end);
 #else
   __clear_cache(start, end);
